@@ -4,11 +4,13 @@ services:
     container_name: wordpress_sitehaat
     environment:
       WORDPRESS_DB_HOST: mysql
-      WORDPRESS_DB_USER: b2buser
-      WORDPRESS_DB_PASSWORD: b2bpass
+      WORDPRESS_DB_USER: wpuser
+      WORDPRESS_DB_PASSWORD: wppass
       WORDPRESS_DB_NAME: wordpress_sitehaat
     volumes:
       - wordpress_sitehaat_data:/var/www/html
+    depends_on:
+      - mysql
     networks:
       - comarto_network
 
@@ -17,11 +19,13 @@ services:
     container_name: wordpress_akhlaqfood
     environment:
       WORDPRESS_DB_HOST: mysql
-      WORDPRESS_DB_USER: b2buser
-      WORDPRESS_DB_PASSWORD: b2bpass
+      WORDPRESS_DB_USER: wpuser
+      WORDPRESS_DB_PASSWORD: wppass
       WORDPRESS_DB_NAME: wordpress_akhlaqfood
     volumes:
       - wordpress_akhlaqfood_data:/var/www/html
+    depends_on:
+      - mysql
     networks:
       - comarto_network
 
@@ -30,11 +34,26 @@ services:
     container_name: wordpress_grocery
     environment:
       WORDPRESS_DB_HOST: mysql
-      WORDPRESS_DB_USER: b2buser
-      WORDPRESS_DB_PASSWORD: b2bpass
+      WORDPRESS_DB_USER: wpuser
+      WORDPRESS_DB_PASSWORD: wppass
       WORDPRESS_DB_NAME: wordpress_grocery
     volumes:
       - wordpress_grocery_data:/var/www/html
+    depends_on:
+      - mysql
+    networks:
+      - comarto_network
+
+  mysql:
+    image: mysql:8.0
+    container_name: wordpress_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_USER: wpuser
+      MYSQL_PASSWORD: wppass
+    volumes:
+      - ./mysql-init:/docker-entrypoint-initdb.d
+      - wordpress_mysql_data:/var/lib/mysql
     networks:
       - comarto_network
 
@@ -42,6 +61,7 @@ volumes:
   wordpress_sitehaat_data:
   wordpress_akhlaqfood_data:
   wordpress_grocery_data:
+  wordpress_mysql_data:
 
 networks:
   comarto_network:
