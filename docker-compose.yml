@@ -1,6 +1,6 @@
 services:
   wordpress_sitehaat:
-    image: wordpress:fpm
+    image: wordpress:latest
     container_name: wordpress_sitehaat
     environment:
       WORDPRESS_DB_HOST: mysql
@@ -13,7 +13,7 @@ services:
       - comarto_network
 
   wordpress_akhlaqfood:
-    image: wordpress:fpm
+    image: wordpress:latest
     container_name: wordpress_akhlaqfood
     environment:
       WORDPRESS_DB_HOST: mysql
@@ -26,7 +26,7 @@ services:
       - comarto_network
 
   wordpress_grocery:
-    image: wordpress:fpm
+    image: wordpress:latest
     container_name: wordpress_grocery
     environment:
       WORDPRESS_DB_HOST: mysql
