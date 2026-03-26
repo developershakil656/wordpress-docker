@@ -10,7 +10,8 @@ services:
     volumes:
       - wordpress_sitehaat_data:/var/www/html
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     networks:
       - comarto_network
 
@@ -25,7 +26,8 @@ services:
     volumes:
       - wordpress_akhlaqfood_data:/var/www/html
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     networks:
       - comarto_network
 
@@ -40,7 +42,8 @@ services:
     volumes:
       - wordpress_grocery_data:/var/www/html
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     networks:
       - comarto_network
 
@@ -56,6 +59,10 @@ services:
       - wordpress_mysql_data:/var/lib/mysql
     networks:
       - comarto_network
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-uwpuser", "-pwppass"]
+      timeout: 20s
+      retries: 10
 
 volumes:
   wordpress_sitehaat_data:
